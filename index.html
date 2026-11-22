@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#6d45d8"><title>Munny — Seu dinheiro em equilíbrio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script defer src="js/supabase.js"></script><script defer src="js/app.js"></script>
+</head>
+<body>
+  <div id="auth-screen" class="auth-screen">
+    <section class="auth-card">
+      <div class="brand brand-large"><span class="brand-mark">m</span><span>munny<span class="brand-dot">.</span></span></div>
+      <p class="eyebrow">FINANÇAS MAIS LEVES</p><h1>Seu dinheiro,<br><span>no seu controle.</span></h1>
+      <p class="muted auth-copy">Organize suas movimentações, acompanhe seu saldo e chegue mais perto dos seus objetivos.</p>
+      <form id="login-form" class="form-stack">
+        <label>E-mail<input id="login-email" type="email" placeholder="voce@email.com" required autocomplete="email"></label>
+        <label>Senha<input id="login-password" type="password" placeholder="Sua senha" required autocomplete="current-password"></label>
+        <button class="btn btn-primary btn-full" type="submit">Entrar <span>→</span></button>
+      </form>
+      <p class="auth-switch">Ainda não tem conta? <button class="text-button" id="show-signup">Criar conta</button></p>
+      <form id="signup-form" class="form-stack hidden">
+        <label>Nome completo<input id="signup-name" type="text" placeholder="Seu nome" required maxlength="100"></label>
+        <label>E-mail<input id="signup-email" type="email" placeholder="voce@email.com" required></label>
+        <label>Senha<input id="signup-password" type="password" placeholder="Mínimo de 8 caracteres" minlength="8" required></label>
+        <button class="btn btn-primary btn-full" type="submit">Criar minha conta <span>→</span></button>
+        <p class="auth-switch">Já tem uma conta? <button class="text-button" id="show-login">Voltar ao login</button></p>
+      </form>
+      <p id="auth-message" class="feedback" role="status"></p>
+      <p class="auth-foot">Seus dados financeiros são privados e protegidos.</p>
+    </section>
+    <aside class="auth-art"><div class="art-orb orb-one"></div><div class="art-orb orb-two"></div><div class="art-content"><span class="art-kicker">UM PASSO DE CADA VEZ</span><div class="art-quote">Pequenas escolhas.<br><strong>Grandes conquistas.</strong></div><div class="art-card"><span>Meta em destaque</span><strong>Viagem dos sonhos</strong><div class="progress"><i style="width:68%"></i></div><small>68% do seu objetivo</small></div></div><span class="art-caption">Munny by Saldoup</span></aside>
+  </div>
+
+  <div id="app" class="app hidden">
+    <aside class="sidebar">
+      <a class="brand" href="#inicio"><span class="brand-mark">m</span><span>munny<span class="brand-dot">.</span></span></a>
+      <div class="side-label">MENU PRINCIPAL</div>
+      <nav class="nav-list">
+        <button class="nav-item active" data-page="inicio"><span>◫</span> Visão geral</button>
+        <button class="nav-item" data-page="transacoes"><span>⇄</span> Transações</button>
+        <button class="nav-item" data-page="metas"><span>◎</span> Minhas metas</button>
+      </nav>
+      <div class="sidebar-bottom"><div class="help-card"><span class="help-icon">✦</span><strong>Um futuro mais leve</strong><p>Organize hoje para conquistar amanhã.</p></div><button id="logout-button" class="nav-item logout"><span>↪</span> Sair da conta</button></div>
+    </aside>
+    <main class="main-content">
+      <header class="topbar"><div><span class="eyebrow" id="today-label">SEU RESUMO FINANCEIRO</span><h2 id="page-title">Visão geral</h2></div><div class="profile"><div class="avatar" id="avatar">U</div><div><strong id="profile-name">Usuário</strong><small>Conta pessoal</small></div></div></header>
+      <section id="page-inicio" class="page">
+        <div class="welcome-row"><div><p class="muted" id="welcome-text">Aqui está o resumo das suas finanças.</p><h3>Vamos cuidar bem do seu dinheiro? <span>✦</span></h3></div><button class="btn btn-primary" id="new-transaction">＋ Nova transação</button></div>
+        <div class="summary-grid">
+          <article class="summary-card balance-card"><div class="card-top"><span>Saldo atual</span><span class="card-icon">◈</span></div><strong id="balance-value">R$ 0,00</strong><small>Considerando movimentações efetivadas</small></article>
+          <article class="summary-card"><div class="card-top"><span>Receitas do mês</span><span class="metric-icon income">↗</span></div><strong id="income-value">R$ 0,00</strong><small class="positive">Dinheiro que entrou</small></article>
+          <article class="summary-card"><div class="card-top"><span>Despesas do mês</span><span class="metric-icon expense">↘</span></div><strong id="expense-value">R$ 0,00</strong><small class="muted">Dinheiro que saiu</small></article>
+        </div>
+        <div class="content-grid"><article class="panel chart-panel"><div class="panel-heading"><div><h3>Despesas por categoria</h3><p>Distribuição dos seus gastos neste mês</p></div><span class="panel-symbol">◌</span></div><div id="category-chart" class="category-chart"><div class="empty-state">Registre despesas para visualizar seu gráfico.</div></div></article>
+          <article class="panel goals-preview"><div class="panel-heading"><div><h3>Suas metas</h3><p>O caminho até suas conquistas</p></div><button class="text-button" data-goto="metas">Ver todas →</button></div><div id="goal-preview-list" class="mini-goals"><div class="empty-state">Você ainda não criou metas.</div></div></article></div>
+        <article class="panel recent-panel"><div class="panel-heading"><div><h3>Últimas transações</h3><p>Acompanhe suas movimentações recentes</p></div><button class="text-button" data-goto="transacoes">Ver transações →</button></div><div id="recent-transactions" class="transaction-list"><div class="empty-state">Nenhuma movimentação cadastrada.</div></div></article>
+      </section>
+
+      <section id="page-transacoes" class="page hidden"><div class="page-actions"><div><p class="muted">Todas as suas movimentações em um só lugar.</p></div><button class="btn btn-primary" id="new-transaction-2">＋ Nova transação</button></div><article class="panel"><div class="toolbar"><input id="transaction-search" class="search-input" placeholder="⌕ Buscar por descrição ou categoria..."><select id="transaction-filter"><option value="TODAS">Todas</option><option value="RECEITA">Receitas</option><option value="DESPESA">Despesas</option><option value="AGENDADA">Agendadas</option></select></div><div id="all-transactions" class="transaction-list"><div class="empty-state">Carregando movimentações...</div></div></article></section>
+
+      <section id="page-metas" class="page hidden"><div class="page-actions"><p class="muted">Defina objetivos e acompanhe cada conquista.</p><button class="btn btn-primary" id="new-goal">＋ Criar meta</button></div><div id="goals-grid" class="goals-grid"><div class="empty-state">Carregando metas...</div></div></section>
+    </main>
+  </div>
+
+  <dialog id="transaction-dialog" class="modal"><form id="transaction-form" class="modal-form"><div class="modal-heading"><div><span class="eyebrow">MOVIMENTAÇÃO</span><h3 id="transaction-modal-title">Nova transação</h3></div><button type="button" class="icon-button close-modal" aria-label="Fechar">×</button></div><input type="hidden" id="transaction-id"><div class="type-switch"><button type="button" class="type-option selected" data-type="DESPESA">Despesa</button><button type="button" class="type-option" data-type="RECEITA">Receita</button></div><input type="hidden" id="transaction-type" value="DESPESA"><label>Valor (R$)<input id="transaction-amount" type="number" min="0.01" step="0.01" placeholder="0,00" required></label><label>Descrição<input id="transaction-description" maxlength="150" placeholder="Ex.: Mercado, salário..." required></label><div class="form-two"><label>Categoria<select id="transaction-category" required></select><button type="button" id="add-category" class="text-button" style="justify-self:start;padding:2px 0">＋ Criar categoria</button></label><label>Data<input id="transaction-date" type="date" required></label></div><label>Vincular a uma meta <span class="optional">(opcional)</span><select id="transaction-goal"><option value="">Nenhuma meta</option></select></label><p class="form-hint">Transações com data futura ficam agendadas e não alteram o saldo até a data informada.</p><div class="modal-actions"><button type="button" class="btn btn-light close-modal">Cancelar</button><button class="btn btn-primary" type="submit">Salvar transação</button></div><p class="feedback" id="transaction-feedback"></p></form></dialog>
+
+  <dialog id="goal-dialog" class="modal"><form id="goal-form" class="modal-form"><div class="modal-heading"><div><span class="eyebrow">SEU PRÓXIMO OBJETIVO</span><h3>Nova meta financeira</h3></div><button type="button" class="icon-button close-modal" aria-label="Fechar">×</button></div><label>Nome da meta<input id="goal-name" maxlength="100" placeholder="Ex.: Viagem de férias" required></label><label>Valor-alvo (R$)<input id="goal-target" type="number" min="0.01" step="0.01" placeholder="0,00" required></label><label>Prazo<input id="goal-deadline" type="date" required></label><div class="modal-actions"><button type="button" class="btn btn-light close-modal">Cancelar</button><button type="submit" class="btn btn-primary">Criar meta</button></div><p id="goal-feedback" class="feedback"></p></form></dialog>
+  <div id="toast" class="toast" role="status"></div>
+</body></html>
